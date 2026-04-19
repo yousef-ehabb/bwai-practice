@@ -19,10 +19,17 @@ import { Card, CardContent } from '@/components/ui/card';
 
 export default function CartPage() {
   const { items, removeItem, updateQuantity, getTotalPrice, getTotalItems } = useCartStore();
+  const [hasHydrated, setHasHydrated] = React.useState(false);
+
+  React.useEffect(() => {
+    setHasHydrated(true);
+  }, []);
 
   const subtotal = getTotalPrice();
   const tax = subtotal * 0.1;
   const total = subtotal + tax;
+
+  if (!hasHydrated) return null;
 
   if (items.length === 0) {
     return (
